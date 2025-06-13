@@ -153,7 +153,12 @@ if st.button("Calcular", key="btn_calcular"):
     pdf.cell(0, 10, "Histórico de Operações:", ln=True)
     for op in operacoes:
         pdf.multi_cell(190, 8, "- " + op)
-    pdf_bytes = pdf.output(dest='S')  # <-- corrigido aqui!
+
+    pdf_data = pdf.output(dest='S')
+    if isinstance(pdf_data, str):
+        pdf_bytes = pdf_data.encode('latin-1')
+    else:
+        pdf_bytes = pdf_data
 
     st.download_button(
         label="📄 Baixar PDF",
