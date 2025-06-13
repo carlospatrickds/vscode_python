@@ -1,0 +1,2 @@
+streamlit
+num2words
