@@ -120,7 +120,7 @@ if st.button("Calcular", key="btn_calcular"):
     for op in operacoes:
         st.write(f"- {op}")
 
-    # Geração do PDF
+   # Geração do PDF
     dt = datetime.now()
     dt_str = dt.strftime("%Y-%m-%d_%H-%M-%S")
     nome_pdf = nome.replace(" ", "_") if nome else "analise"
@@ -148,10 +148,11 @@ if st.button("Calcular", key="btn_calcular"):
     pdf.cell(0, 10, f"Horas Extras 100%: {horas_100:.0f} - R$ {total_horas_100:,.2f} (R$ {valor_hora_100:.2f}/hora)", ln=True)
     pdf.cell(0, 10, f"Total de Adicionais: R$ {total_adicionais:,.2f}", ln=True)
     pdf.ln(5)
+    pdf.set_auto_page_break(auto=True, margin=15)
     pdf.set_font("Arial", size=11)
     pdf.cell(0, 10, "Histórico de Operações:", ln=True)
     for op in operacoes:
-        pdf.multi_cell(0, 8, "- " + op)
+        pdf.multi_cell(190, 8, "- " + op)
     pdf_bytes = pdf.output(dest='S').encode('latin-1')
 
     st.download_button(
