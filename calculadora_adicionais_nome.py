@@ -22,9 +22,8 @@ salarios_minimos = {
     "07/2025": 1518.00, "08/2025": 1518.00, "09/2025": 1518.00, "10/2025": 1518.00, "11/2025": 1518.00, "12/2025": 1518.00,
 }
 
-# Função para formatar valores como reais no padrão brasileiro
 def format_real(valor):
-    return f"R$ {valor:,.2f}".replace(",", "X").replace(".", ",").replace("X", ".")
+    return "R$ {:,.2f}".format(valor).replace(",", "X").replace(".", ",").replace("X", ".")
 
 st.title("📊 Sistema de Cálculo de Adicionais Trabalhistas")
 st.write("Preencha os dados abaixo para calcular os adicionais:")
