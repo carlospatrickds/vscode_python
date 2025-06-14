@@ -120,49 +120,5 @@ if st.button("Calcular", key="btn_calcular"):
     for op in operacoes:
         st.write(f"- {op}")
 
-   # Geração do PDF
-    dt = datetime.now()
-    dt_str = dt.strftime("%Y-%m-%d_%H-%M-%S")
-    nome_pdf = nome.replace(" ", "_") if nome else "analise"
-    filename = f"{nome_pdf}_{dt_str}.pdf"
 
-    pdf = FPDF()
-    pdf.add_page()
-    pdf.set_font("Arial", size=12)
-    pdf.cell(0, 10, f"Sistema de Cálculo de Adicionais Trabalhistas", ln=True, align="C")
-    pdf.ln(5)
-    pdf.cell(0, 10, f"Nome: {nome}", ln=True)
-    pdf.cell(0, 10, f"Competência: {competencia}", ln=True)
-    pdf.cell(0, 10, f"Data/Hora da análise: {dt.strftime('%d/%m/%Y %H:%M:%S')}", ln=True)
-    pdf.ln(5)
-    pdf.cell(0, 10, f"Salário Base: R$ {salario_base:,.2f}", ln=True)
-    pdf.cell(0, 10, f"Divisor Jornada: {divisor_jornada:.0f}", ln=True)
-    pdf.cell(0, 10, f"Salário Mínimo Vigente: R$ {salario_minimo:,.2f}", ln=True)
-    pdf.cell(0, 10, f"Periculosidade: R$ {adicional_periculosidade:,.2f}", ln=True)
-    pdf.cell(0, 10, f"Insalubridade: R$ {adicional_insalubridade:,.2f}", ln=True)
-    pdf.cell(0, 10, f"Base Hora: R$ {base_hora:,.2f}", ln=True)
-    pdf.cell(0, 10, f"Valor Hora Normal: R$ {valor_hora_normal:,.2f}", ln=True)
-    pdf.ln(5)
-    pdf.cell(0, 10, f"Horas Noturnas: {horas_noturnas:.0f} - R$ {adicional_noturno:,.2f}", ln=True)
-    pdf.cell(0, 10, f"Horas Extras 50%: {horas_50:.0f} - R$ {total_horas_50:,.2f} (R$ {valor_hora_50:.2f}/hora)", ln=True)
-    pdf.cell(0, 10, f"Horas Extras 100%: {horas_100:.0f} - R$ {total_horas_100:,.2f} (R$ {valor_hora_100:.2f}/hora)", ln=True)
-    pdf.cell(0, 10, f"Total de Adicionais: R$ {total_adicionais:,.2f}", ln=True)
-    pdf.ln(5)
-    pdf.set_auto_page_break(auto=True, margin=15)
-    pdf.set_font("Arial", size=11)
-    pdf.cell(0, 10, "Histórico de Operações:", ln=True)
-    for op in operacoes:
-        pdf.multi_cell(190, 8, "- " + op)
-
-    pdf_data = pdf.output(dest='S')
-    if isinstance(pdf_data, str):
-        pdf_bytes = pdf_data.encode('latin-1')
-    else:
-        pdf_bytes = pdf_data
-
-    st.download_button(
-        label="📄 Baixar PDF",
-        data=pdf_bytes,
-        file_name=filename,
-        mime="application/pdf"
-    )
+    
