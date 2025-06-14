@@ -23,7 +23,7 @@ salarios_minimos = {
 }
 
 def format_real(valor):
-    return "R$ {:,.2f}".format(valor).replace(",", "X").replace(".", ",").replace("X", ".")
+    return f"R$ {valor:,.2f}".replace(",", "X").replace(".", ",").replace("X", ".")
 
 def format_real_sem_rs(valor):
     return "{:,.2f}".format(valor).replace(",", "X").replace(".", ",").replace("X", ".")
@@ -129,9 +129,15 @@ if st.button("Calcular", key="btn_calcular"):
     st.write(f"🔹 Valor da Hora Normal: {format_real(valor_hora_normal)}")
 
     st.subheader("💰 Cálculos:")
-    st.write(f"🌙 Adicional Noturno ({horas_noturnas:.0f}h): {format_real(adicional_noturno)}")
-    st.write(f"⏱️ Horas Extras 50% ({horas_50:.0f}h): {format_real(total_horas_50)} ({format_real(valor_hora_50)}/hora)")
-    st.write(f"⏱️ Horas Extras 100% ({horas_100:.0f}h): {format_real(total_horas_100)} ({format_real(valor_hora_100)}/hora)")
+    st.write(
+        f"🌙 Adicional Noturno ({horas_noturnas:.0f}h): {format_real(adicional_noturno)}"
+    )
+    st.write(
+        f"⏱️ Horas Extras 50% ({horas_50:.0f}h): {format_real(total_horas_50)} ({format_real(valor_hora_50)}/hora)"
+    )
+    st.write(
+        f"⏱️ Horas Extras 100% ({horas_100:.0f}h): {format_real(total_horas_100)} ({format_real(valor_hora_100)}/hora)"
+    )
     st.success(f"💰 Total de Adicionais: {format_real(total_adicionais)}")
 
     st.subheader("📑 Histórico de Operações Realizadas")
