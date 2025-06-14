@@ -22,6 +22,10 @@ salarios_minimos = {
     "07/2025": 1518.00, "08/2025": 1518.00, "09/2025": 1518.00, "10/2025": 1518.00, "11/2025": 1518.00, "12/2025": 1518.00,
 }
 
+# Função para formatar valores como reais no padrão brasileiro
+def format_real(valor):
+    return f"R$ {valor:,.2f}".replace(",", "X").replace(".", ",").replace("X", ".")
+
 st.title("📊 Sistema de Cálculo de Adicionais Trabalhistas")
 st.write("Preencha os dados abaixo para calcular os adicionais:")
 
@@ -68,23 +72,39 @@ if st.button("Calcular", key="btn_calcular"):
     operacoes = []
 
     base_hora = salario_base + adicional_periculosidade + adicional_insalubridade
-    operacoes.append(f"Base de cálculo da hora normal = salário base + adicional periculosidade + adicional insalubridade = {salario_base:.2f} + {adicional_periculosidade:.2f} + {adicional_insalubridade:.2f} = {base_hora:.2f}")
+    operacoes.append(
+        f"Base de cálculo da hora normal = salário base + adicional periculosidade + adicional insalubridade = "
+        f"{format_real(salario_base)} + {format_real(adicional_periculosidade)} + {format_real(adicional_insalubridade)} = "
+        f"{format_real(base_hora)}"
+    )
 
     valor_hora_normal = base_hora / divisor_jornada if divisor_jornada > 0 else 0.0
-    operacoes.append(f"Valor da hora normal = base de cálculo / divisor jornada = {base_hora:.2f} / {divisor_jornada:.0f} = {valor_hora_normal:.2f}")
+    operacoes.append(
+        f"Valor da hora normal = base de cálculo / divisor jornada = {format_real(base_hora)} / {divisor_jornada:.0f} = {format_real(valor_hora_normal)}"
+    )
 
     adicional_noturno = horas_noturnas * valor_hora_normal * 0.2
-    operacoes.append(f"Adicional noturno = horas noturnas x valor hora normal x 20% = {horas_noturnas:.0f} x {valor_hora_normal:.2f} x 0.2 = {adicional_noturno:.2f}")
+    operacoes.append(
+        f"Adicional noturno = horas noturnas x valor hora normal x 20% = {horas_noturnas:.0f} x {format_real(valor_hora_normal)} x 0.2 = {format_real(adicional_noturno)}"
+    )
 
     valor_hora_50 = valor_hora_normal * 1.5
-    operacoes.append(f"Valor da hora extra 50% = valor hora normal x 1.5 = {valor_hora_normal:.2f} x 1.5 = {valor_hora_50:.2f}")
+    operacoes.append(
+        f"Valor da hora extra 50% = valor hora normal x 1.5 = {format_real(valor_hora_normal)} x 1.5 = {format_real(valor_hora_50)}"
+    )
     valor_hora_100 = valor_hora_normal * 2.0
-    operacoes.append(f"Valor da hora extra 100% = valor hora normal x 2 = {valor_hora_normal:.2f} x 2 = {valor_hora_100:.2f}")
+    operacoes.append(
+        f"Valor da hora extra 100% = valor hora normal x 2 = {format_real(valor_hora_normal)} x 2 = {format_real(valor_hora_100)}"
+    )
 
     total_horas_50 = horas_50 * valor_hora_50
-    operacoes.append(f"Total de horas extras 50% = quantidade x valor hora 50% = {horas_50:.0f} x {valor_hora_50:.2f} = {total_horas_50:.2f}")
+    operacoes.append(
+        f"Total de horas extras 50% = quantidade x valor hora 50% = {horas_50:.0f} x {format_real(valor_hora_50)} = {format_real(total_horas_50)}"
+    )
     total_horas_100 = horas_100 * valor_hora_100
-    operacoes.append(f"Total de horas extras 100% = quantidade x valor hora 100% = {horas_100:.0f} x {valor_hora_100:.2f} = {total_horas_100:.2f}")
+    operacoes.append(
+        f"Total de horas extras 100% = quantidade x valor hora 100% = {horas_100:.0f} x {format_real(valor_hora_100)} = {format_real(total_horas_100)}"
+    )
 
     total_adicionais = (
         adicional_periculosidade +
@@ -93,22 +113,24 @@ if st.button("Calcular", key="btn_calcular"):
         total_horas_50 +
         total_horas_100
     )
-    operacoes.append(f"Total de adicionais = periculosidade + insalubridade + noturno + horas 50% + horas 100% = "
-                     f"{adicional_periculosidade:.2f} + {adicional_insalubridade:.2f} + {adicional_noturno:.2f} + "
-                     f"{total_horas_50:.2f} + {total_horas_100:.2f} = {total_adicionais:.2f}")
+    operacoes.append(
+        f"Total de adicionais = periculosidade + insalubridade + noturno + horas 50% + horas 100% = "
+        f"{format_real(adicional_periculosidade)} + {format_real(adicional_insalubridade)} + {format_real(adicional_noturno)} + "
+        f"{format_real(total_horas_50)} + {format_real(total_horas_100)} = {format_real(total_adicionais)}"
+    )
 
     st.subheader("📝 Detalhamento:")
-    st.write(f"🔹 Salário Base: R$ {salario_base:,.2f}")
-    st.write(f"🔹 Adicional de Periculosidade: R$ {adicional_periculosidade:,.2f}")
-    st.write(f"🔹 Adicional de Insalubridade: R$ {adicional_insalubridade:,.2f}")
-    st.write(f"🔹 Base de Cálculo da Hora: R$ {base_hora:,.2f}")
-    st.write(f"🔹 Valor da Hora Normal: R$ {valor_hora_normal:,.2f}")
+    st.write(f"🔹 Salário Base: {format_real(salario_base)}")
+    st.write(f"🔹 Adicional de Periculosidade: {format_real(adicional_periculosidade)}")
+    st.write(f"🔹 Adicional de Insalubridade: {format_real(adicional_insalubridade)}")
+    st.write(f"🔹 Base de Cálculo da Hora: {format_real(base_hora)}")
+    st.write(f"🔹 Valor da Hora Normal: {format_real(valor_hora_normal)}")
 
     st.subheader("💰 Cálculos:")
-    st.write(f"🌙 Adicional Noturno ({horas_noturnas:.0f}h): R$ {adicional_noturno:,.2f}")
-    st.write(f"⏱️ Horas Extras 50% ({horas_50:.0f}h): R$ {total_horas_50:,.2f} (R$ {valor_hora_50:.2f}/hora)")
-    st.write(f"⏱️ Horas Extras 100% ({horas_100:.0f}h): R$ {total_horas_100:,.2f} (R$ {valor_hora_100:.2f}/hora)")
-    st.success(f"💰 Total de Adicionais: R$ {total_adicionais:,.2f}")
+    st.write(f"🌙 Adicional Noturno ({horas_noturnas:.0f}h): {format_real(adicional_noturno)}")
+    st.write(f"⏱️ Horas Extras 50% ({horas_50:.0f}h): {format_real(total_horas_50)} ({format_real(valor_hora_50)}/hora)")
+    st.write(f"⏱️ Horas Extras 100% ({horas_100:.0f}h): {format_real(total_horas_100)} ({format_real(valor_hora_100)}/hora)")
+    st.success(f"💰 Total de Adicionais: {format_real(total_adicionais)}")
 
     st.subheader("📑 Histórico de Operações Realizadas")
     for op in operacoes:
