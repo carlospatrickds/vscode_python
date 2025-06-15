@@ -1,38 +1,46 @@
-import streamlit as st
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Calculadora Simples</title>
+  <style>
+    body { font-family: Arial, sans-serif; max-width: 400px; margin: 40px auto; }
+    input { width: 80px; margin: 5px; }
+    button { width: 40px; margin: 5px; }
+    #resultado { margin-top: 20px; font-size: 1.2em; }
+  </style>
+</head>
+<body>
+  <h2>Calculadora Simples</h2>
+  <input id="campo1" type="number" placeholder="Campo 1">
+  <input id="campo2" type="number" placeholder="Campo 2">
+  <br>
+  <button onclick="calcular('+')">+</button>
+  <button onclick="calcular('-')">-</button>
+  <button onclick="calcular('*')">*</button>
+  <button onclick="calcular('/')">/</button>
+  <div id="resultado"></div>
 
-# Título da página
-st.title("🧾 Ficha de Cliente")
-
-# Coletando dados com interface amigável
-nome = st.text_input("Digite o nome do cliente")
-idade = st.number_input("Digite a idade do cliente", min_value=0, step=1)
-renda = st.number_input("Digite a renda mensal do cliente (R$)", min_value=0.0, step=100.0, format="%.2f")
-profissao = st.text_input("Digite a profissão do cliente")
-
-# Quando o botão for pressionado
-if st.button("📋 Analisar Cliente"):
-    st.subheader("📄 Ficha do Cliente")
-    st.write(f"**Nome:** {nome}")
-    st.write(f"**Idade:** {idade} anos")
-    st.write(f"**Renda:** R$ {renda}")
-    st.write(f"**Profissão:** {profissao}")
-
-    st.subheader("🔍 Análise de Perfil")
-
-    # Regra 1 – Benefício por renda
-    if renda < 2000:
-        st.success("✅ Pode ter direito ao benefício por baixa renda.")
-    else:
-        st.warning("❌ Não se enquadra no critério de renda.")
-
-    # Regra 2 – Idoso
-    if idade >= 60:
-        st.info("👵 Cliente é considerado idoso.")
-    else:
-        st.info("🧒 Cliente não é idoso.")
-
-    # Regra 3 – Situação crítica
-    if profissao.lower() == "desempregado":
-        st.error("🚨 Situação crítica detectada!")
-    else:
-        st.success("🧑 Cliente possui emprego.")
+  <script>
+    function calcular(operacao) {
+      const campo1 = parseFloat(document.getElementById('campo1').value);
+      const campo2 = parseFloat(document.getElementById('campo2').value);
+      let resultado = '';
+      if(isNaN(campo1) || isNaN(campo2)) {
+        resultado = 'Por favor, preencha os dois campos.';
+      } else {
+        switch(operacao) {
+          case '+': resultado = campo1 + campo2; break;
+          case '-': resultado = campo1 - campo2; break;
+          case '*': resultado = campo1 * campo2; break;
+          case '/': 
+            resultado = campo2 !== 0 ? (campo1 / campo2) : 'Divisão por zero!'; 
+            break;
+          default: resultado = 'Operação inválida.';
+        }
+      }
+      document.getElementById('resultado').innerText = 'Resultado: ' + resultado;
+    }
+  </script>
+</body>
+</html>
